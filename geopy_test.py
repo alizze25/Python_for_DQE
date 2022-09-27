@@ -9,10 +9,13 @@ location = geolocator.geocode(la + "," + lo)
 
 print(location)
 
+<<<<<<< HEAD
+=======
 # learn
 a = True
 a = False
 print (a)
 
+>>>>>>> origin/main
 
 
