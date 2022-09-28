@@ -42,3 +42,20 @@ print(largest_cities_dict)
 main_dict = {**family, **pets, **largest_cities_dict}
 print('Dictionary 3 :')
 print(main_dict)
+
+
+
+#  second homework assignment
+
+# Each time there will be a different value for the number of dicts, dicts also with random keys and different lengths
+import random
+import string
+dicts_list = []
+for x in range(0, random.randint(2, 10)):
+    z = {}
+    for i in range(0, random.randint(2, 10)):
+        z[random.choice(string.ascii_lowercase)] = round(random.random()*100)
+    dicts_list.append(z)
+print(dicts_list)
+
+
