@@ -14,17 +14,17 @@ x = word
 try1 = '\n'.join(
     [i.strip().capitalize() for i in x.split(';')])  # Capitalize all first words after period and start from new line\
 print(try1)
-# x12 = try1.replace("iz", "is")
-# print(x12)
-# x13 = x12.replace("normalise", "normalize")
-# print(x13)
-#
-# # check count whitespace
-#
-# # Program for counting number of spaces in text
-#
-# c = 0
-# for i in s:
-#     if (i.isspace()):
-#         c += 1
-# print("Number of Spaces : " + str(c))
+x12 = try1.replace("iz", "is")
+print(x12)
+x13 = x12.replace("normalise", "normalize")
+print(x13)
+
+# check count whitespace
+
+# Program for counting number of spaces in text
+
+c = 0
+for i in s:
+    if (i.isspace()):
+        c += 1
+print("Number of Spaces : " + str(c))
