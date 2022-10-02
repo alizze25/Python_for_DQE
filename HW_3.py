@@ -18,3 +18,18 @@ x12 = try1.replace("iz", "is")
 print(x12)
 x13 = x12.replace("normalise", "normalize")
 print(x13)
+
+
+# check count whitespace
+
+#Program for counting number of spaces in text
+
+c=0
+for i in s:
+	if(i.isspace()):
+		c+=1
+print("Number of Spaces : "+str(c))
+
+
+
+
