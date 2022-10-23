@@ -1,3 +1,5 @@
+#  add func for hw3
+
 import string
 
 sText = '''homEwork:
@@ -14,9 +16,6 @@ def Beautifyer(s):
     try1 = '\n'.join(
         [i.strip().capitalize() + '.' for i in x.split('.')])  # Capitalize all first words after period and start from new line\
     print(try1)
-    # try2 = '\n'.join(
-    #     [i.s.trip().capitalize() for i in x.split('!')])
-    #print(try2)
     x12 = try1.replace("iz", "is")
     print(x12)
     x13 = x12.replace("normalise", "normalize")
@@ -29,7 +28,35 @@ def Beautifyer(s):
 
     print("Number of Spaces : " + str(c))
     return x13
+
+Beautifyer(sText)
 # check count whitespace
 
 # Program for counting number of spaces in text
 #Beautifyer(sText)
+
+
+
+#  add func for hw2
+
+# Each time there will be a different value for the number of dicts, dicts also with random keys and different lengths
+def dict_func():
+    import random
+    import string
+    dicts_list = []
+    for x in range(0, random.randint(2, 10)):
+        z = {}
+        for i in range(0, random.randint(2, 10)):
+            z[random.choice(string.ascii_lowercase)] = round(random.random() * 100)
+        dicts_list.append(z)
+    print(dicts_list)
+    merged_dict = {}
+    print(len(dicts_list))
+    for i in range(0, len(dicts_list)):
+        for k, v in dicts_list[i].items():
+            if merged_dict.get(k) is None:
+                merged_dict[k] = v
+            if v > merged_dict[k]:
+                merged_dict[k] = v
+    print(merged_dict)
+dict_func()
