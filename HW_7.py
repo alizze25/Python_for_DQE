@@ -2,9 +2,14 @@
 from datetime import datetime
 import random
 import os
+from collections import Counter
+from operator import itemgetter
+import re
+import csv
 from HW_4_final import *
 mainFilePAth = "C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt"
 defaultFilePath = "C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/weather.txt"
+fn = ("C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt")
 menu_options = {
     0: 'Create file and extension',
     1: 'Add news',
@@ -44,6 +49,7 @@ def option1():
     #Count words
     try:
         os.remove("wordCount.csv")
+        os.remove("count_all_file.csv")
     except OSError:
         pass
     text = open("news_feed.txt", "r")
@@ -85,7 +91,55 @@ def option1():
                 f.write(":")
                 f.write(str(d[key]))
                 f.write("\n")
-     #print('Handle option \'Add news\'')
+     #Create second csv file
+    file = open("C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt", "r")
+    data = file.read()
+    # get the length of the data
+    number_of_characters = len(data)
+
+    print('Number of characters in text file :', number_of_characters)
+
+    # count_uppercase
+
+    with open("news_feed.txt") as file:
+        count = 0
+        text = file.read()
+        for i in text:
+            if i.isupper():
+                count += 1
+        print(count)
+
+        file = open("news_feed.txt", "rt")
+        data = file.read()
+        words = data.split()
+
+        print('Number of words in text file :', len(words))
+
+        # count percentage
+        # text = "Alice opened the door and found that it led into a small passage, not much larger than a rat-hole: she knelt down and looked along the passage into the loveliest garden you ever saw."
+        with open(fn) as f:
+            data2 = f.read()
+            # concatenating using join
+            joined = " ".join(ele for ele in data2)
+
+            # mapping using Counter()
+            mappd = Counter(joined.split())
+
+            # getting total using sum
+            total_val = sum(mappd.values())
+
+            # getting share of each word
+            res = {key: val / total_val for key,
+                                            val in mappd.items()}
+
+            # printing result
+            print("Percentage share of each word : " + str(res))
+
+        # Write to csv
+        with open('count_all_file.csv', 'w', newline='') as outcsv:
+            writer = csv.writer(outcsv)
+            writer.writerow(["Letters count", "All words count", "Uppercase count", "Percentage count"])
+            writer.writerow([number_of_characters, len(words), count, str(res)])
 
 def option2():
     #file_name = input('Filename with extension, e.g. example.txt: ')
@@ -106,6 +160,7 @@ def option2():
     # Count words
     try:
         os.remove("wordCount.csv")
+        os.remove("count_all_file.csv")
     except OSError:
         pass
     text = open("news_feed.txt", "r")
@@ -147,7 +202,55 @@ def option2():
                 f.write(":")
                 f.write(str(d[key]))
                 f.write("\n")
-    # print('Handle option \'Add news\'')
+            # Create second csv file
+            file = open("C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt", "r")
+            data = file.read()
+            # get the length of the data
+            number_of_characters = len(data)
+
+            print('Number of characters in text file :', number_of_characters)
+
+            # count_uppercase
+
+            with open("news_feed.txt") as file:
+                count = 0
+                text = file.read()
+                for i in text:
+                    if i.isupper():
+                        count += 1
+                print(count)
+
+                file = open("news_feed.txt", "rt")
+                data = file.read()
+                words = data.split()
+
+                print('Number of words in text file :', len(words))
+
+                # count percentage
+                # text = "Alice opened the door and found that it led into a small passage, not much larger than a rat-hole: she knelt down and looked along the passage into the loveliest garden you ever saw."
+                with open(fn) as f:
+                    data2 = f.read()
+                    # concatenating using join
+                    joined = " ".join(ele for ele in data2)
+
+                    # mapping using Counter()
+                    mappd = Counter(joined.split())
+
+                    # getting total using sum
+                    total_val = sum(mappd.values())
+
+                    # getting share of each word
+                    res = {key: val / total_val for key,
+                                                    val in mappd.items()}
+
+                    # printing result
+                    print("Percentage share of each word : " + str(res))
+
+                # Write to csv
+                with open('count_all_file.csv', 'w', newline='') as outcsv:
+                    writer = csv.writer(outcsv)
+                    writer.writerow(["Letters count", "All words count", "Uppercase count", "Percentage count"])
+                    writer.writerow([number_of_characters, len(words), count, str(res)])
 
 def option3():
     #file_name = input('Filename with extension, e.g. example.txt: ')
@@ -165,6 +268,7 @@ def option3():
     # Count words
     try:
         os.remove("wordCount.csv")
+        os.remove("count_all_file.csv")
     except OSError:
         pass
     text = open("news_feed.txt", "r")
@@ -206,6 +310,54 @@ def option3():
                 f.write(":")
                 f.write(str(d[key]))
                 f.write("\n")
+
+    # Create second csv file
+    file = open("C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt", "r")
+    data = file.read()
+    # get the length of the data
+    number_of_characters = len(data)
+
+    print('Number of characters in text file :', number_of_characters)
+
+    # count_uppercase
+
+    with open("news_feed.txt") as file:
+     count = 0
+     text = file.read()
+    for i in text:
+     if i.isupper():
+         count += 1
+         print(count)
+
+    file = open("news_feed.txt", "rt")
+    data = file.read()
+    words = data.split()
+
+    print('Number of words in text file :', len(words))
+
+    # count percentage
+    with open(fn) as f:
+        data2 = f.read()
+        # concatenating using join
+        joined = " ".join(ele for ele in data2)
+
+        # mapping using Counter()
+        mappd = Counter(joined.split())
+
+        # getting total using sum
+        total_val = sum(mappd.values())
+
+        # getting share of each word
+        res = {key: val / total_val for key, val in mappd.items()}
+
+        # printing result
+        print("Percentage share of each word : " + str(res))
+
+        # Write to csv
+        with open('count_all_file.csv', 'w', newline='') as outcsv:
+            writer = csv.writer(outcsv)
+            writer.writerow(["Letters count", "All words count", "Uppercase count", "Percentage count"])
+            writer.writerow([number_of_characters, len(words), count, str(res)])
 
 def option4():
     file_path = input('Enter a file path: ')
@@ -230,6 +382,7 @@ def option4():
             # Count words
             try:
                 os.remove("wordCount.csv")
+                os.remove("count_all_file.csv")
             except OSError:
                 pass
             text = open("news_feed.txt", "r")
@@ -271,6 +424,55 @@ def option4():
                         f.write(":")
                         f.write(str(d[key]))
                         f.write("\n")
+
+    # Create second csv file
+    file = open("C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt", "r")
+    data = file.read()
+    # get the length of the data
+    number_of_characters = len(data)
+
+    print('Number of characters in text file :', number_of_characters)
+
+    # count_uppercase
+
+    with open("news_feed.txt") as file:
+        count = 0
+        text = file.read()
+    for i in text:
+        if i.isupper():
+            count += 1
+            print(count)
+
+    file = open("news_feed.txt", "rt")
+    data = file.read()
+    words = data.split()
+
+    print('Number of words in text file :', len(words))
+
+    # count percentage
+    with open(fn) as f:
+        data2 = f.read()
+        # concatenating using join
+        joined = " ".join(ele for ele in data2)
+
+        # mapping using Counter()
+        mappd = Counter(joined.split())
+
+        # getting total using sum
+        total_val = sum(mappd.values())
+
+        # getting share of each word
+        res = {key: val / total_val for key, val in mappd.items()}
+
+        # printing result
+        print("Percentage share of each word : " + str(res))
+
+        # Write to csv
+        with open('count_all_file.csv', 'w', newline='') as outcsv:
+            writer = csv.writer(outcsv)
+            writer.writerow(["Letters count", "All words count", "Uppercase count", "Percentage count"])
+            writer.writerow([number_of_characters, len(words), count, str(res)])
+
 if __name__=='__main__':
     while(True):
         print_menu()
