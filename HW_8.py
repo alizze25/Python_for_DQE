@@ -8,6 +8,7 @@
 #hw_7
 from datetime import datetime
 import random
+import json
 import os
 from collections import Counter
 from operator import itemgetter
@@ -23,7 +24,8 @@ menu_options = {
     2: 'Write advertising',
     3: 'Scary story',
     4: 'Weather forecast',
-    5: 'Exit',
+    5: 'Json Data',
+    6: 'Exit',
 }
 curDT = datetime.now()
 curDT1 = datetime.now()
@@ -479,7 +481,124 @@ def option4():
             writer = csv.writer(outcsv)
             writer.writerow(["Letters count", "All words count", "Uppercase count", "Percentage count"])
             writer.writerow([number_of_characters, len(words), count, str(res)])
+def option5():
+    json_path = input('Enter valid json path: ')
+    if os.path.exists(json_path):
+        with open(json_path, 'r') as openfile:
+            f = open(file_name, 'a', encoding='utf-8')
+            f.write("\n")
 
+            #  Reading from json file
+            # resp = json.dumps(openfile.__dict__)
+            # o = json.loads(resp)
+            data = json.load(openfile)
+        if 'row1' in data:
+            for i in data['row1']:
+                if i['type1'] == "news":
+                    f.write("Name: " )
+                    f.write(i['type1'])
+                    f.write("\n")
+                    f.write("Text: ")
+                    f.write(i['text_news'])
+                    f.write("\n")
+                    f.write("From: ")
+                    f.write(i['city'])
+                    f.write("\n")
+
+                elif i['type1'] == "ads":
+                    f.write("Type: ")
+                    f.write(i['type1'])
+                    f.write("\n")
+                    f.write("ads_text: ")
+                    f.write(i['ads_text'])
+                    f.write("\n")
+                    f.write("ads_date: ")
+                    f.write(i['ads_date'])
+                    f.write("\n")
+                    print()
+
+        if 'row2' in data:
+            for i in data['row2']:
+                if i['type2'] == "news":
+                    f.write("\n")
+                    f.write("Name: ")
+                    f.write(i['type2'])
+                    f.write("\n")
+                    f.write("Text: ")
+                    f.write(i['text_news'])
+                    f.write("\n")
+                    f.write("From: ")
+                    f.write(i['city'])
+                    f.write("\n")
+                elif i['type2'] == "ads":
+                    f.write("\n")
+                    f.write("Type: ")
+                    f.write(i['type2'])
+                    f.write("\n")
+                    f.write("ads_text: ")
+                    f.write(i['ads_text'])
+                    f.write("\n")
+                    f.write("ads_date: ")
+                    f.write(i['ads_date'])
+                    f.write("\n")
+        else:
+            print("Invalid json")
+    else:
+        with open('try.json', 'r') as openfile:
+            data = json.load(openfile)
+            f = open(file_name, 'a', encoding='utf-8')
+            f.write("\n")
+        if 'row1' in data:
+            for i in data['row1']:
+                if i['type1'] == "news":
+                    f.write("Name: ")
+                    f.write(i['type1'])
+                    f.write("\n")
+                    f.write("Text: ")
+                    f.write(i['text_news'])
+                    f.write("\n")
+                    f.write("From: ")
+                    f.write(i['city'])
+                    f.write("\n")
+
+                elif i['type1'] == "ads":
+                    f.write("Type: ")
+                    f.write(i['type1'])
+                    f.write("\n")
+                    f.write("ads_text: ")
+                    f.write(i['ads_text'])
+                    f.write("\n")
+                    f.write("ads_date: ")
+                    f.write(i['ads_date'])
+                    f.write("\n")
+                    print()
+
+        if 'row2' in data:
+            for i in data['row2']:
+                if i['type2'] == "news":
+                    f.write("\n")
+                    f.write("Name: ")
+                    f.write(i['type2'])
+                    f.write("\n")
+                    f.write("Text: ")
+                    f.write(i['text_news'])
+                    f.write("\n")
+                    f.write("From: ")
+                    f.write(i['city'])
+                    f.write("\n")
+                elif i['type2'] == "ads":
+                    f.write("\n")
+                    f.write("Type: ")
+                    f.write(i['type2'])
+                    f.write("\n")
+                    f.write("ads_text: ")
+                    f.write(i['ads_text'])
+                    f.write("\n")
+                    f.write("ads_date: ")
+                    f.write(i['ads_date'])
+                    f.write("\n")
+        else:
+            print("Invalid json")
 if __name__=='__main__':
     while(True):
         print_menu()
@@ -500,7 +619,9 @@ if __name__=='__main__':
         elif option == 4:
             option4()
         elif option == 5:
+            option5()
+        elif option == 6:
             print('Thanks message before exiting')
             exit()
         else:
-            print('Invalid option. Please enter a number between 1 and 4.')
+            print('Invalid option. Please enter a number between 1 and 6.')
