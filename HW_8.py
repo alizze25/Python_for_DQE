@@ -5,7 +5,7 @@
 # 3.Remove file if it was successfully processed
 
 
-# hw_7
+# hw_8
 from datetime import datetime
 import random
 import json
@@ -503,6 +503,8 @@ def write_jsondata():
             # resp = json.dumps(openfile.__dict__)
             # o = json.loads(resp)
             data = json.load(openfile)
+            json_fields_count = input('Choose how many records should be added(write one or two): ')
+    if json_fields_count == 'one':
         if 'row1' in data:
             for i in data['row1']:
                 if i['type1'] == "news":
@@ -515,9 +517,10 @@ def write_jsondata():
                     f.write("From: ")
                     f.write(i['city'])
                     f.write("\n")
+                    f.write("\n")
 
                 elif i['type1'] == "ads":
-                    f.write("Type: ")
+                    f.write("Name: ")
                     f.write(i['type1'])
                     f.write("\n")
                     f.write("ads_text: ")
@@ -526,8 +529,37 @@ def write_jsondata():
                     f.write("ads_date: ")
                     f.write(i['ads_date'])
                     f.write("\n")
+                    f.write("\n")
                     print()
+        os.remove(json_path)
 
+    elif json_fields_count == 'two':
+        if 'row1' in data:
+            for i in data['row1']:
+                if i['type1'] == "news":
+                    f.write("Name: ")
+                    f.write(i['type1'])
+                    f.write("\n")
+                    f.write("Text: ")
+                    f.write(i['text_news'])
+                    f.write("\n")
+                    f.write("From: ")
+                    f.write(i['city'])
+                    f.write("\n")
+                    f.write("\n")
+
+                elif i['type1'] == "ads":
+                    f.write("Name: ")
+                    f.write(i['type1'])
+                    f.write("\n")
+                    f.write("ads_text: ")
+                    f.write(i['ads_text'])
+                    f.write("\n")
+                    f.write("ads_date: ")
+                    f.write(i['ads_date'])
+                    f.write("\n")
+                    f.write("\n")
+                    print()
         if 'row2' in data:
             for i in data['row2']:
                 if i['type2'] == "news":
@@ -541,9 +573,10 @@ def write_jsondata():
                     f.write("From: ")
                     f.write(i['city'])
                     f.write("\n")
+                    f.write("\n")
                 elif i['type2'] == "ads":
                     f.write("\n")
-                    f.write("Type: ")
+                    f.write("Name: ")
                     f.write(i['type2'])
                     f.write("\n")
                     f.write("ads_text: ")
@@ -552,8 +585,11 @@ def write_jsondata():
                     f.write("ads_date: ")
                     f.write(i['ads_date'])
                     f.write("\n")
+                    f.write("\n")
+                    os.remove(json_path)
         else:
             print("Invalid json")
+
     else:
         with open('try.json', 'r') as openfile:
             data = json.load(openfile)
@@ -571,9 +607,10 @@ def write_jsondata():
                     f.write("From: ")
                     f.write(i['city'])
                     f.write("\n")
+                    f.write("\n")
 
                 elif i['type1'] == "ads":
-                    f.write("Type: ")
+                    f.write("Name: ")
                     f.write(i['type1'])
                     f.write("\n")
                     f.write("ads_text: ")
@@ -581,6 +618,7 @@ def write_jsondata():
                     f.write("\n")
                     f.write("ads_date: ")
                     f.write(i['ads_date'])
+                    f.write("\n")
                     f.write("\n")
                     print()
 
@@ -597,6 +635,7 @@ def write_jsondata():
                     f.write("From: ")
                     f.write(i['city'])
                     f.write("\n")
+                    f.write("\n")
                 elif i['type2'] == "ads":
                     f.write("\n")
                     f.write("Type: ")
@@ -608,6 +647,8 @@ def write_jsondata():
                     f.write("ads_date: ")
                     f.write(i['ads_date'])
                     f.write("\n")
+                    f.write("\n")
+
         else:
             print("Invalid json")
 
