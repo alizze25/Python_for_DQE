@@ -1,20 +1,20 @@
-
-from datetime import datetime
-import random
+import csv
 import json
 import os
+import random
+# from HW_4_final import *
+import xml.etree.ElementTree as ET
 from collections import Counter
+from datetime import datetime
+
 import pandas as pd
 import pyodbc
-from operator import itemgetter
-import re
-import csv
-#from HW_4_final import *
-import xml.etree.ElementTree as ET
+
+from HW_4_final import Beautifyer
 
 mainFilePAth = "C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt"
 defaultFilePath = "C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/weather.txt"
-fn = ("C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt")
+fn = "C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt"
 menu_options = {
     0: 'Create file and extension',
     1: 'Add news',
@@ -650,7 +650,7 @@ def write_jsondata():
         else:
             print("Invalid json")
 
-# Count words
+    # Count words
     try:
         os.remove("wordCount.csv")
         os.remove("count_all_file.csv")
@@ -744,6 +744,8 @@ def write_jsondata():
                     writer = csv.writer(outcsv)
                     writer.writerow(["Letters count", "All words count", "Uppercase count", "Percentage count"])
                     writer.writerow([number_of_characters, len(words), count, str(res)])
+
+
 def write_xmldata():
     xml_path = input('Enter valid xml path: ')
     if os.path.exists(xml_path):
@@ -752,22 +754,22 @@ def write_xmldata():
         mytree = ET.parse(xml_path)
         myroot = mytree.getroot()
         for x in myroot.findall('employee'):
-                item = x.find('item').text
-                home = x.find('home').text
-                job_description = x.find('job_description').text
-                work_experience = x.find('work_experience').text
-                f.write("\n")
-                #print(item, home, job_description, work_experience)
-                f.write("Job search")
-                f.write("\n")
-                f.write("Employee name: " + item)
-                f.write("\n")
-                f.write("Employee location: " + home)
-                f.write("\n")
-                f.write("Employee position: " + job_description)
-                f.write("\n")
-                f.write("Employee work experience: " + work_experience)
-                f.write("\n")
+            item = x.find('item').text
+            home = x.find('home').text
+            job_description = x.find('job_description').text
+            work_experience = x.find('work_experience').text
+            f.write("\n")
+            # print(item, home, job_description, work_experience)
+            f.write("Job search")
+            f.write("\n")
+            f.write("Employee name: " + item)
+            f.write("\n")
+            f.write("Employee location: " + home)
+            f.write("\n")
+            f.write("Employee position: " + job_description)
+            f.write("\n")
+            f.write("Employee work experience: " + work_experience)
+            f.write("\n")
     else:
         mytree = ET.parse('tryXml2.xml')
         myroot = mytree.getroot()
@@ -791,7 +793,7 @@ def write_xmldata():
             f.write("\n")
             f.write("Employee work experience: " + work_experience)
             f.write("\n")
-# Count words
+    # Count words
     try:
         os.remove("wordCount.csv")
         os.remove("count_all_file.csv")
@@ -860,8 +862,9 @@ def write_xmldata():
 
                 print('Number of words in text file :', len(words))
 
-                # count percentage
-                # text = "Alice opened the door and found that it led into a small passage, not much larger than a rat-hole: she knelt down and looked along the passage into the loveliest garden you ever saw."
+                #  count percentage text = "Alice opened the door and found that it led into a small passage,
+                #  not much larger than a rat-hole: she knelt down and looked along the passage into the loveliest
+                #  garden you ever saw."
                 with open(fn) as f:
                     data2 = f.read()
                     # concatenating using join
@@ -885,6 +888,8 @@ def write_xmldata():
                     writer = csv.writer(outcsv)
                     writer.writerow(["Letters count", "All words count", "Uppercase count", "Percentage count"])
                     writer.writerow([number_of_characters, len(words), count, str(res)])
+
+
 def write_2DB():
     csv_db_path = input('Enter valid csv path: ')
     if os.path.exists(csv_db_path):
@@ -920,7 +925,7 @@ def write_2DB():
         conn.commit()
     else:
         print("Write correct csvFile path")
-# Count words
+    # Count words
     try:
         os.remove("wordCount.csv")
         os.remove("count_all_file.csv")
@@ -1014,6 +1019,8 @@ def write_2DB():
                     writer = csv.writer(outcsv)
                     writer.writerow(["Letters count", "All words count", "Uppercase count", "Percentage count"])
                     writer.writerow([number_of_characters, len(words), count, str(res)])
+
+
 if __name__ == '__main__':
     while (True):
         print_menu()
