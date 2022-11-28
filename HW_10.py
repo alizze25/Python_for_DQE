@@ -1,20 +1,15 @@
-# Description
-# Expand previous Homework 5/6/7 with additional class, which allow to provide records by JSON file:
-# 1.Define your input format (one or many records)
-# 2.Default folder or user provided file path
-# 3.Remove file if it was successfully processed
 
-
-# hw_8
 from datetime import datetime
 import random
 import json
 import os
 from collections import Counter
+import pandas as pd
+import pyodbc
 from operator import itemgetter
 import re
 import csv
-from HW_4_final import *
+#from HW_4_final import *
 import xml.etree.ElementTree as ET
 
 mainFilePAth = "C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt"
@@ -28,7 +23,7 @@ menu_options = {
     4: 'Weather forecast',
     5: 'Json Data',
     6: 'Xml Data',
-    7: 'Api data',
+    7: 'Write to DB',
     8: 'Exit',
 }
 curDT = datetime.now()
@@ -796,8 +791,229 @@ def write_xmldata():
             f.write("\n")
             f.write("Employee work experience: " + work_experience)
             f.write("\n")
-def write_apidata():
-    print("Hello")
+# Count words
+    try:
+        os.remove("wordCount.csv")
+        os.remove("count_all_file.csv")
+    except OSError:
+        pass
+    text = open("news_feed.txt", "r")
+
+    # Create an empty dictionary
+    d = dict()
+
+    # Loop through each line of the file
+    for line in text:
+        # Remove the leading spaces and newline character
+        line = line.strip()
+
+        # Convert the characters in line to
+        # lowercase to avoid case mismatch
+        line = line.lower()
+
+        # Split the line into words
+        words = line.split(" ")
+
+        # Iterate over each word in line
+        for word in words:
+            # Check if the word is already in dictionary
+            if word in d:
+                # Increment count of word by 1
+                d[word] = d[word] + 1
+            else:
+                # Add the word to dictionary with count 1
+                d[word] = 1
+
+            # Print the contents of dictionary
+            # for key in list(d.keys()):
+            # print(key, ":", d[key])
+
+            # deleting the csv file
+
+            f = open("wordCount.csv", "a", encoding='UTF8')
+            for key in list(d.keys()):
+                f.write(str(key))
+                f.write(":")
+                f.write(str(d[key]))
+                f.write("\n")
+            # Create second csv file
+            file = open("C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt", "r")
+            data = file.read()
+            # get the length of the data
+            number_of_characters = len(data)
+
+            print('Number of characters in text file :', number_of_characters)
+
+            # count_uppercase
+
+            with open("news_feed.txt") as file:
+                count = 0
+                text = file.read()
+                for i in text:
+                    if i.isupper():
+                        count += 1
+                print(count)
+
+                file = open("news_feed.txt", "rt")
+                data = file.read()
+                words = data.split()
+
+                print('Number of words in text file :', len(words))
+
+                # count percentage
+                # text = "Alice opened the door and found that it led into a small passage, not much larger than a rat-hole: she knelt down and looked along the passage into the loveliest garden you ever saw."
+                with open(fn) as f:
+                    data2 = f.read()
+                    # concatenating using join
+                    joined = " ".join(ele for ele in data2)
+
+                    # mapping using Counter()
+                    mappd = Counter(joined.split())
+
+                    # getting total using sum
+                    total_val = sum(mappd.values())
+
+                    # getting share of each word
+                    res = {key: val / total_val for key,
+                                                    val in mappd.items()}
+
+                    # printing result
+                    print("Percentage share of each word : " + str(res))
+
+                # Write to csv
+                with open('count_all_file.csv', 'w', newline='') as outcsv:
+                    writer = csv.writer(outcsv)
+                    writer.writerow(["Letters count", "All words count", "Uppercase count", "Percentage count"])
+                    writer.writerow([number_of_characters, len(words), count, str(res)])
+def write_2DB():
+    csv_db_path = input('Enter valid csv path: ')
+    if os.path.exists(csv_db_path):
+        data = pd.read_csv(r'wordCount.csv')
+        df = pd.DataFrame(data)
+
+        # Connect to SQL Server
+        conn = pyodbc.connect('Driver={SQL Server};'
+                              'Server=RON\SQLEXPRESS;'
+                              'Database=test_database;'
+                              'Trusted_Connection=yes;')
+        cursor = conn.cursor()
+
+        # Create Table
+        cursor.execute('''
+        		CREATE TABLE products (
+        			product_id int primary key,
+        			product_name nvarchar(50),
+        			price int
+        			)
+                       ''')
+
+        # Insert DataFrame to Table
+        for row in df.itertuples():
+            cursor.execute('''
+                        INSERT INTO products (product_id, product_name, price)
+                        VALUES (?,?,?)
+                        ''',
+                           row.product_id,
+                           row.product_name,
+                           row.price
+                           )
+        conn.commit()
+    else:
+        print("Write correct csvFile path")
+# Count words
+    try:
+        os.remove("wordCount.csv")
+        os.remove("count_all_file.csv")
+    except OSError:
+        pass
+    text = open("news_feed.txt", "r")
+
+    # Create an empty dictionary
+    d = dict()
+
+    # Loop through each line of the file
+    for line in text:
+        # Remove the leading spaces and newline character
+        line = line.strip()
+
+        # Convert the characters in line to
+        # lowercase to avoid case mismatch
+        line = line.lower()
+
+        # Split the line into words
+        words = line.split(" ")
+
+        # Iterate over each word in line
+        for word in words:
+            # Check if the word is already in dictionary
+            if word in d:
+                # Increment count of word by 1
+                d[word] = d[word] + 1
+            else:
+                # Add the word to dictionary with count 1
+                d[word] = 1
+
+            # Print the contents of dictionary
+            # for key in list(d.keys()):
+            # print(key, ":", d[key])
+
+            # deleting the csv file
+
+            f = open("wordCount.csv", "a", encoding='UTF8')
+            for key in list(d.keys()):
+                f.write(str(key))
+                f.write(":")
+                f.write(str(d[key]))
+                f.write("\n")
+            # Create second csv file
+            file = open("C:\/Users\Alisa_Yavorska\PycharmProjects\Python_for_DQE\/news_feed.txt", "r")
+            data = file.read()
+            # get the length of the data
+            number_of_characters = len(data)
+
+            print('Number of characters in text file :', number_of_characters)
+
+            # count_uppercase
+
+            with open("news_feed.txt") as file:
+                count = 0
+                text = file.read()
+                for i in text:
+                    if i.isupper():
+                        count += 1
+                print(count)
+
+                file = open("news_feed.txt", "rt")
+                data = file.read()
+                words = data.split()
+
+                print('Number of words in text file :', len(words))
+
+                # count percentage
+                # text = "Alice opened the door and found that it led into a small passage, not much larger than a rat-hole: she knelt down and looked along the passage into the loveliest garden you ever saw."
+                with open(fn) as f:
+                    data2 = f.read()
+                    # concatenating using join
+                    joined = " ".join(ele for ele in data2)
+
+                    # mapping using Counter()
+                    mappd = Counter(joined.split())
+
+                    # getting total using sum
+                    total_val = sum(mappd.values())
+
+                    # getting share of each word
+                    res = {key: val / total_val for key,
+                                                    val in mappd.items()}
+
+                    # printing result
+                    print("Percentage share of each word : " + str(res))
+
+                # Write to csv
+                with open('count_all_file.csv', 'w', newline='') as outcsv:
+                    writer = csv.writer(outcsv)
+                    writer.writerow(["Letters count", "All words count", "Uppercase count", "Percentage count"])
+                    writer.writerow([number_of_characters, len(words), count, str(res)])
 if __name__ == '__main__':
     while (True):
         print_menu()
@@ -822,7 +1038,7 @@ if __name__ == '__main__':
         elif option == 6:
             write_xmldata()
         elif option == 7:
-            write_apidata()
+            write_2DB()
         elif option == 8:
             print('Thanks message before exiting')
             exit()
