@@ -33,6 +33,7 @@ for i in s:
         c += 1
 print("Number of Spaces : " + str(c))
 
+# Create one sentences with last words
 
 z = re.findall(r'(\w+)\.', try1)
 print(z)
